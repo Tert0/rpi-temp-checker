@@ -68,9 +68,3 @@ async def on_startup():
     GPIO.setup(COOLER_PIN, GPIO.OUT)
     scheduler = await aiojobs.create_scheduler()
     await scheduler.spawn(check_job(scheduler))
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="8.8.8.8", port=8080)
