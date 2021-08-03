@@ -24,6 +24,6 @@ jobs:
       - name: Check code formatting with black
         run: black -l 120 . --diff --check
       - name: Check code with flake8
-        run: flake8 fastapi_framework tests
+        run: flake8 .
       - name: Check Typing with MyPy
-        run: mypy fastapi_framework
+        run: mypy .
