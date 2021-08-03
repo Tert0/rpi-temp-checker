@@ -15,7 +15,6 @@ requires = [
     "aiofiles==0.7.0",
     "aiojobs==0.3.0",
     "async-timeout==3.0.1",
-    "gpio4==0.0.8"
 ]
 
 [tool.flit.metadata.requires-extra]

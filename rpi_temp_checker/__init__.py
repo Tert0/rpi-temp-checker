@@ -6,7 +6,7 @@ from enum import Enum
 from os import getenv
 import asyncio
 import aiojobs
-from gpio4 import GPIO
+from RPi import GPIO
 
 app = FastAPI(title="Raspberry Pi Temperature Checker")
 
