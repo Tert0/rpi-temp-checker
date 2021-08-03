@@ -12,12 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Get Latest Tag
-        uses: oprypin/find-latest-tag@v1
-        with:
-          repository: Tert0/futurecloud-backend
-        id: latest_tag
-      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       -
@@ -36,4 +30,4 @@ jobs:
         with:
           platforms: linux/arm/v7
           push: true
-          tags: tert0/rpi-temp-checker:latest, tert0/rpi-temp-checker:${{ steps.latest_tag.outputs.tag }}
+          tags: tert0/rpi-temp-checker:latest
