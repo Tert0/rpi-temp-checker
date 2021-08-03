@@ -11,16 +11,6 @@ import RPi.GPIO as GPIO
 app = FastAPI(title="Raspberry Pi Temperature Checker")
 
 
-class Scheduler:
-    scheduler = None
-
-    async def init(self):
-        self.scheduler = await aiojobs.create_scheduler()
-
-    async def __call__(self):
-        return self.scheduler
-
-
 HIGHT_TEMP: float = float(getenv("HIGHT_TEMP", 55.0))
 CRIT_TEMP: float = float(getenv("CRIT_TEMP", 70.0))
 TIMEOUT: float = float(getenv("TIMEOUT", 10))
