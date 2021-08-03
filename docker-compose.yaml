@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+    rpi-temp-checker:
+        build: .
+        ports:
+            - 8877:8080
+        privileged: true
