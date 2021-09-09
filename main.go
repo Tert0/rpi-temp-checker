@@ -21,11 +21,11 @@ func getTemp() float64 {
 	if err != err {
 		panic("Cannot get CPU Temp!")
 	}
-	temp, err := strconv.ParseFloat(string(content), 64)
+	temp, err := strconv.ParseInt(string(content), 10, 64)
 	if err != nil {
 		panic("Cannot get CPU Temp!")
 	}
-	return temp / 1000
+	return float64(temp / 1000)
 }
 
 func getTempStatus() tempStatus {
