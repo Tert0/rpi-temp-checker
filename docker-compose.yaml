@@ -9,5 +9,5 @@ services:
         environment:
             - "HIGH_TEMP=55.0"
             - "CRITICAL_TEMP=70.0"
-            - "GPIO_PIN=3"
+            - "GPIO_PIN=2"
             - "TIMEOUT=10"
