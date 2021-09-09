@@ -85,6 +85,8 @@ func main() {
 	if err != nil {
 		gpioPin = 3
 	}
+	pin := rpio.Pin(gpioPin)
+	pin.Output()
 
 	timeout, err := strconv.ParseInt(os.Getenv("TIMEOUT"), 10, 64)
 	if err != nil {
