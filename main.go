@@ -2,25 +2,28 @@ package main
 
 import (
 	"fmt"
-	_ "github.com/stianeikeland/go-rpio/v4"
+	"github.com/stianeikeland/go-rpio"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 import "github.com/gin-gonic/gin"
 
 type tempStatus string
 
 const (
-	tempStatusNormal tempStatus = "NORMAL"
+	tempStatusNormal tempStatus = "NORMGeAL"
 	tempStatusHigh tempStatus = "HIGH"
 	tempStatusCritical tempStatus = "CRITICAL"
 )
 
+var gpioPin int64
+
 func getTemp() float64 {
 	content, err := ioutil.ReadFile("/sys/class/hwmon/hwmon0/device/temp")
-	if err != err {
+	if err != nil {
 		fmt.Println("Error: ", err.Error())
 		panic("Cannot get CPU Temp!")
 	}
@@ -55,7 +58,39 @@ func getTempStatus() tempStatus {
 	}
 }
 
+func checkJob(timeout time.Duration) {
+	pin := rpio.Pin(3)
+
+	switch getTempStatus() {
+	case tempStatusNormal:
+		pin.Low()
+	case tempStatusHigh:
+		pin.High()
+	case tempStatusCritical:
+		pin.High()
+	}
+	time.Sleep(time.Second * timeout)
+	go checkJob(timeout)
+}
+
 func main() {
+	err := rpio.Open()
+
+	if err != nil {
+		fmt.Println("Error: ", err.Error())
+		panic("RPi GPIO Error")
+	}
+
+	gpioPin, err = strconv.ParseInt(os.Getenv("GPIO_PIN"), 10, 64)
+	if err != nil {
+		gpioPin = 3
+	}
+
+	timeout, err := strconv.ParseInt(os.Getenv("TIMEOUT"), 10, 64)
+	if err != nil {
+		timeout = 10
+	}
+	go checkJob(time.Duration(timeout))
 
 	r := gin.Default()
 
@@ -67,5 +102,10 @@ func main() {
 		c.String(200, string(getTempStatus()))
 	})
 
-	r.Run("0.0.0.0:8080")
+
+	err = r.Run("0.0.0.0:8080")
+	if err != nil {
+		fmt.Println("Error: ", err.Error())
+		panic("Can't start Webserver!")
+	}
 }
