@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/stianeikeland/go-rpio"
+	"github.com/gin-gonic/gin"
+	"github.com/stianeikeland/go-rpio/v4"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
-import "github.com/gin-gonic/gin"
 
 type tempStatus string
 
@@ -59,7 +59,7 @@ func getTempStatus() tempStatus {
 }
 
 func checkJob(timeout time.Duration) {
-	pin := rpio.Pin(3)
+	pin := rpio.Pin(gpioPin)
 
 	switch getTempStatus() {
 	case tempStatusNormal:
