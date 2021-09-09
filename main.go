@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	_ "github.com/stianeikeland/go-rpio/v4"
 	"io/ioutil"
 	"os"
@@ -19,10 +20,13 @@ const (
 func getTemp() float64 {
 	content, err := ioutil.ReadFile("/sys/class/hwmon/hwmon0/device/temp")
 	if err != err {
+		fmt.Println("Error: %s", err.Error())
 		panic("Cannot get CPU Temp!")
 	}
+	err = nil
 	temp, err := strconv.ParseInt(string(content), 10, 64)
 	if err != nil {
+		fmt.Println("Error: %s", err.Error())
 		panic("Cannot get CPU Temp!")
 	}
 	return float64(temp / 1000)
