@@ -14,7 +14,7 @@ import (
 type tempStatus string
 
 const (
-	tempStatusNormal tempStatus = "NORMGeAL"
+	tempStatusNormal tempStatus = "NORMAL"
 	tempStatusHigh tempStatus = "HIGH"
 	tempStatusCritical tempStatus = "CRITICAL"
 )
@@ -68,6 +68,7 @@ func checkJob(timeout time.Duration) {
 		pin.High()
 	case tempStatusCritical:
 		pin.High()
+		fmt.Println("CRITICAL TEMP!")
 	}
 	time.Sleep(time.Second * timeout)
 	go checkJob(timeout)
@@ -83,7 +84,7 @@ func main() {
 
 	gpioPin, err = strconv.ParseInt(os.Getenv("GPIO_PIN"), 10, 64)
 	if err != nil {
-		gpioPin = 3
+		gpioPin = 2
 	}
 	pin := rpio.Pin(gpioPin)
 	pin.Output()
