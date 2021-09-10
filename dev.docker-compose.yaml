@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
     rpi-temp-checker:
-        image: tert0/rpi-temp-checker
+        build: .
         ports:
             - "8080:8080"
         privileged: true
@@ -10,4 +10,4 @@ services:
             - "HIGH_TEMP=55.0"
             - "CRITICAL_TEMP=70.0"
             - "GPIO_PIN=2"
-            - "TIMEOUT=20"
+            - "TIMEOUT=10"
