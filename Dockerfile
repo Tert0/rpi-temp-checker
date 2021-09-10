@@ -1,9 +1,15 @@
-FROM python:buster
+FROM golang:latest as BUILDER
 
-WORKDIR /app
+WORKDIR /go/src/
 
-RUN pip install fastapi==0.68.0 uvicorn==0.14.0 aiofiles==0.7.0 aiojobs==0.3.0 async-timeout==3.0.1 RPi.GPIO
+COPY . .
 
-COPY rpi_temp_checker/ rpi_temp_checker/
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/main .
 
-CMD python -m rpi_temp_checker
+FROM alpine:latest
+
+WORKDIR /go/bin
+
+COPY --from=builder /go/bin/main .
+
+CMD ["/go/bin/main"]
