@@ -33,7 +33,7 @@ func getTemp() float64 {
 		fmt.Println("Error: ", err.Error())
 		panic("Cannot get CPU Temp!")
 	}
-	return float64(temp / 1000)
+	return float64(temp) / 1000.0
 }
 
 func getTempStatus() tempStatus {
