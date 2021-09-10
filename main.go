@@ -97,6 +97,8 @@ func main() {
 
 	r := gin.Default()
 
+	gin.SetMode(gin.ReleaseMode)
+
 	r.GET("/temp", func(c *gin.Context) {
 		c.String(200, strconv.FormatFloat(getTemp(), 'f', 2, 64))
 	})
