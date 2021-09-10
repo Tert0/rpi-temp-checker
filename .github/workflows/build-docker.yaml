@@ -3,7 +3,7 @@ name: Build Docker
 on:
   push:
     branches:
-      - 'develop'
+      - 'stable'
     tags:
       - "v*"
 
