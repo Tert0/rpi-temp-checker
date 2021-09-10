@@ -95,9 +95,9 @@ func main() {
 	}
 	go checkJob(time.Duration(timeout))
 
-	r := gin.Default()
-
 	gin.SetMode(gin.ReleaseMode)
+
+	r := gin.Default()
 
 	r.GET("/temp", func(c *gin.Context) {
 		c.String(200, strconv.FormatFloat(getTemp(), 'f', 2, 64))
